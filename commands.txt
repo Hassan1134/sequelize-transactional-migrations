@@ -1,0 +1,7 @@
+{
+  "db:makemigrations": "sequelize-make-migration",
+  "db:down": "sequelize-undo-last-migration",
+  "db:down:last:local": "sequelize-undo-last-migration --env local",
+  "db:down:last:staging": "sequelize-undo-last-migration --env staging",
+  "db:down:last:production": "sequelize-undo-last-migration --env production"
+}
