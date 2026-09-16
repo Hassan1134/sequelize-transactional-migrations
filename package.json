@@ -1,0 +1,16 @@
+{
+  "name": "sequelize-transactional-migrations",
+  "version": "0.1.2",
+  "description": "Transactional PostgreSQL model migrations and numeric latest-migration rollback for Sequelize 5 and 6",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "main": "index.js",
+  "files": ["bin/", "lib/", "index.js", "README.md", "COMPATIBILITY.md"],
+  "bin": {
+    "sequelize-make-migration": "bin/make.js",
+    "sequelize-undo-last-migration": "bin/undo.js"
+  },
+  "engines": { "node": ">=18.20.0" },
+  "peerDependencies": { "sequelize": "^5.22.5 || ^6.3.0", "sequelize-cli": "^5.5.1 || ^6.0.0", "pg": "^8.2.0" },
+  "scripts": { "test": "node --test", "prepack": "npm test" }
+}

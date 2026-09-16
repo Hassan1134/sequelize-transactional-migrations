@@ -1,0 +1,6 @@
+Adapted from sequelize-auto-migrations-v2 1.2.1, lib/migrate.js.
+https://github.com/brianschardt/sequelize-auto-migrations
+MIT license by Michael Maslov; see LICENSE in this directory.
+Removed legacy migration writer/execution helpers and replaced its deep-diff,
+lodash, and object-hash usage with Node.js standard-library implementations.
+Uses the consuming Sequelize peer rather than installing Sequelize 4.

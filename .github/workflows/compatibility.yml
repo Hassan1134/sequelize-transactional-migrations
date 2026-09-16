@@ -1,0 +1,23 @@
+name: Compatibility
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22, 24, 26]
+        orm: ['5.22.5', '6.3.0', 'latest']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install ORM and matching CLI
+        shell: bash
+        run: |
+          cli=6
+          if [ '${{ matrix.orm }}' = '5.22.5' ]; then cli=5.5.1; fi
+          npm install --no-save sequelize@${{ matrix.orm }} sequelize-cli@$cli pg@8
+      - run: npm test
+      - run: npm pack --dry-run
