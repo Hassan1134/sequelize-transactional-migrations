@@ -3,12 +3,25 @@
 Generate transactional PostgreSQL migrations from Sequelize model changes and
 undo the highest **applied numeric revision** (128 sorts after 99).
 
+## Benefits
+
+- **Less manual migration work:** generate migrations from Sequelize model changes
+  instead of writing every schema operation by hand.
+- **Transactional schema changes:** each generated `up` and `down` runs in a
+  managed PostgreSQL transaction, so a failed migration can roll back its changes.
+- **Review before applying:** use `--preview` to inspect generated changes and
+  `--dry-run` to check which applied migration would be undone.
+- **Predictable rollback selection:** undo the highest applied numeric revision,
+  
+- **Fits existing Sequelize projects:** reuse your application's configuration,
+  migration snapshots, and Sequelize CLI workflow with Sequelize 5 or 6.
+
 ## Install
 
-This is a local package, not a published npm release. From your application:
+Install the published package from npm in your application:
 
 ```sh
-npm install --save-dev ../sequelize-transactional-migrations
+npm install --save-dev sequelize-transactional-migrations
 ```
 
 The application must supply `sequelize`, `sequelize-cli`, and `pg`. Match CLI 5
@@ -90,9 +103,8 @@ npm pack
 `npm pack` creates an installable `.tgz`. The package has no runtime dependencies;
 Sequelize, Sequelize CLI, and pg are peers supplied by the application. The package allowlist excludes tests,
 application models, environment files and migration snapshots. No application
-files are modified on installation. No install hooks run. No npm publication
-has been performed. Choose a license and confirm registry-name availability
-before publishing (`UNLICENSED` until then).
+files are modified on installation. No install hooks run. The package is published
+on npm under the MIT license.
 
 Programmatic exports: `renderMigration(previousTables, currentTables, info)` and
 `selectLatestMigration(appliedFilenames)`.
