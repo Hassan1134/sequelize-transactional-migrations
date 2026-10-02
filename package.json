@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transactional-migrations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transactional PostgreSQL model migrations and numeric latest-migration rollback for Sequelize 5 and 6",
   "license": "MIT",
   "author": "Muhammad Hassan",
