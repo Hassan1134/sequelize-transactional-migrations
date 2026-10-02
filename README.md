@@ -74,6 +74,9 @@ is not supported. CLI and Sequelize resolve from the consuming application.
   transforming data; review dependent views, shared enum types and constraints.
 - Generation advances the snapshot, not the database. Existing applied drift
   requires a corrective migration; this tool does not introspect/repair drift.
+- If generation is interrupted between writing a migration and its snapshot,
+  the next generation checks `_current.pending.json` and recovers only when
+  the files still match the generated content. Edited files require manual review.
 - Review migrations before applying. Dropped data cannot be recovered by restoring
   only a table definition. `--execute` is intentionally rejected.
 - Custom serializers, ESM model registries, TypeScript loaders and Sequelize 7
@@ -88,9 +91,9 @@ and APIs: https://sequelize.org/releases/ . Older unsupported Node/Sequelize
 majors are not claimed compatible. PostgreSQL support also depends on your ORM
 and pg driver versions. See `COMPATIBILITY.md` for locally verified versions.
 
-The CI workflow tests older and current ORM versions across Node releases.
-Unit tests use Sequelize SQL generation with simulated database transactions;
-they are not live PostgreSQL integration tests.
+The CI workflow tests older and current ORM versions across Node releases with
+PostgreSQL 16. Unit tests simulate transactions; the integration test applies
+and undoes migrations against PostgreSQL when `TEST_DATABASE_URL` is set.
 
 ## Development and packing
 
@@ -99,6 +102,14 @@ npm install
 npm test
 npm pack
 ```
+
+To run the database test locally, supply a disposable PostgreSQL database URL:
+
+```sh
+TEST_DATABASE_URL=postgres://user:password@localhost:5432/test_db npm test
+```
+
+The test creates and removes its own tables in that database.
 
 `npm pack` creates an installable `.tgz`. The package has no runtime dependencies;
 Sequelize, Sequelize CLI, and pg are peers supplied by the application. The package allowlist excludes tests,
